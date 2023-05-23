@@ -3,6 +3,7 @@ version: "3.8"
 volumes:
   prometheus-data:
   grafana-data:
+  alertmanager-data:
 
 services:
   prometheus:
@@ -12,10 +13,22 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules/prometheus_rules.yaml:/etc/prometheus/rules/prometheus_rules.yaml
+      - ./prometheus/rules/prometheus_alerts.yaml:/etc/prometheus/rules/prometheus_alerts.yaml
       - prometheus-data:/prometheus
     restart: unless-stopped
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./prometheus/alertmanager/alertmanager.yaml:/config/alertmanager.yml
+      - alertmanager-data:/data
+    command: --config.file=/config/alertmanager.yml --log.level=debug
 
   grafana:
     image: grafana/grafana-oss:latest
@@ -42,4 +55,3 @@ services:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
       - /:/rootfs:ro
-

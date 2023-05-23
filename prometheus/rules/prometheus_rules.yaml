@@ -1,0 +1,7 @@
+groups:
+  - name: Prometheus Http rule
+    rules:
+      - record: job:prometheus_http_requests_total:sum_handler
+        expr: sum(prometheus_http_requests_total) by(handler)
+      - record: job:prometheus_http_requests_total:sum_code
+        expr: sum(prometheus_http_requests_total) by(code)
