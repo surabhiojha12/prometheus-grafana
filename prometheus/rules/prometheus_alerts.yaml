@@ -6,3 +6,6 @@ groups:
         for: 1m
         labels:
           severity: critical
+        annotations:
+          summary: Node exporter is down
+          description: the {{ $labels.instance }} is down value {{ $value}}  
