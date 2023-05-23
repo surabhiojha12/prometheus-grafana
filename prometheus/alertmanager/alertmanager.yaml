@@ -4,8 +4,9 @@ route:
 receivers:
   - name: admin
     email_configs:
-      - smarthost: 'smtp.gmail.com:465'
-        auth_username: 'your_mail@gmail.com'
-        auth_password: ""
-        from: 'your_mail@gmail.com'
-        to: 'test1@yopmail.com'
+      - smarthost: 'smtp.gmail.com:587'
+        auth_username: 'youremail@gmail.com'
+        auth_identity: 'youremail@gmail.com'
+        auth_password: '' # generate 16 digit app password in google
+        from: 'youremail@gmail.com'
+        to: 'someemail@yopmail.com'
